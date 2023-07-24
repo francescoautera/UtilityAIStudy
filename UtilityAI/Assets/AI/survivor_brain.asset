@@ -182,10 +182,10 @@ MonoBehaviour:
       Data: 9|UtilityAI.Weight, UtilityAI
     - Name: _title
       Entry: 1
-      Data: Weight
+      Data: Thirsty
     - Name: Parameter
       Entry: 7
-      Data: 10|CharacterHealthParameter, Assembly-CSharp
+      Data: 10|CharacterThirstParameter, Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 
@@ -441,9 +441,12 @@ MonoBehaviour:
     - Name: WaitForComplete
       Entry: 5
       Data: true
-    - Name: DrinkTime
+    - Name: drinkTime
       Entry: 4
       Data: 2
+    - Name: drinkRestore
+      Entry: 4
+      Data: 60
     - Name: 
       Entry: 8
       Data: 
@@ -759,6 +762,9 @@ MonoBehaviour:
     - Name: EatTime
       Entry: 4
       Data: 3
+    - Name: eatRestore
+      Entry: 4
+      Data: 50
     - Name: 
       Entry: 8
       Data: 

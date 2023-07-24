@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+
 
 namespace UtilityAI
 {
@@ -17,8 +19,12 @@ namespace UtilityAI
         public ThinkTime ThinkTime = ThinkTime.Update;
 
         [SerializeField, ReadOnly] private List<Action> _actionsRunning = new();
-
+        
         private float _lastThinkTime = 0;
+
+        public bool isObjectSatisfyAction;
+
+       
 
         private void Update()
         {
@@ -54,8 +60,7 @@ namespace UtilityAI
 
             var actionToExecute = BrainData.GetBestAction(this);
             _actionsRunning.Add(actionToExecute);
-            actionToExecute.Execute(this, deltaTime);
-
+            actionToExecute.Execute(this, deltaTime,isObjectSatisfyAction);
             _lastThinkTime = Time.time;
         }
 
