@@ -1,16 +1,26 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UtilityAI;
+using Action = UtilityAI.Action;
 
 namespace Objects {
 
 	public class ObjectLogicContainer : Singleton<ObjectLogicContainer> {
 
 		public List<ObjectLogic> objects = new List<ObjectLogic>();
-		
+		public List<Thinker> Thinkers = new List<Thinker>();
 
-		public ObjectLogic GetObject(Action action,Thinker thinker) {
+		public override void Awake() {
+			Thinker.OnThinkerBorn += RegisterElement;
+		}
+
+		private void OnDestroy() {
+			Thinker.OnThinkerBorn -= RegisterElement;
+		}
+
+		public void  SelectRestorer(Action action,Thinker thinker) {
 			var objectsCopy = new List<ObjectLogic>();
 			
 			foreach (ObjectLogic objectParam in objects) {
@@ -19,8 +29,14 @@ namespace Objects {
 					objectsCopy.Add(objectParam);
 				}
 			}
-			
-			return objectsCopy.Count == 0 ? objects[0] : GetMaxRestoreObject(objectsCopy, action);
+
+			if (objectsCopy.Count == 0) {
+				thinker.GetComponent<AgentLogic>().MoveOnRandomPoint(action);
+			}
+			else {
+				var objectRestore = GetMaxRestoreObject(objectsCopy, action);
+				thinker.GetComponent<AgentLogic>().Move(objectRestore,action);
+			}
 		}
 
 
@@ -41,6 +57,12 @@ namespace Objects {
 			return objectsParam[index];
 		}
 
+
+		private void RegisterElement(Thinker thinker) {
+			Thinkers.Add(thinker);
+			thinker.OnObjectSatisfyRequested += SelectRestorer;
+			
+		}
 	}
 
 }

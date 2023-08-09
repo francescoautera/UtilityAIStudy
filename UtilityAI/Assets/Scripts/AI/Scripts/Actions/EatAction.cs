@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using CharacterData;
 using Objects;
 
 namespace UtilityAI
@@ -8,37 +9,36 @@ namespace UtilityAI
     {
         public float EatTime;
         public float eatRestore;
-        private ObjectLogic currentObject;
         private Coroutine _coroutine;
 
-        public override void Execute(Thinker thinker, float deltaTime, bool needObject) {
+        public override void Execute(Thinker thinker, float deltaTime, bool needObject = false) {
            
             if (!needObject) {
                 _coroutine = thinker.StartCoroutine(EatCoroutine(thinker));
             }
-            else {
-                currentObject = GetObject(thinker, this);
-                thinker.GetComponent<AgentLogic>().Move(currentObject,this);
-            }
-        }
-
-        private ObjectLogic GetObject(Thinker thinker, Action action) {
-            return ObjectLogicContainer.Instance.GetObject(action, thinker);
+           
         }
         
-        public override void ExecuteActionAfterMovement(Thinker thinker, float deltaTime) {
-            throw new System.NotImplementedException();
+        
+        public override void ExecuteActionAfterMovement(Thinker thinker, float deltaTime, float actionTimer=-1, float actionRestore=-1) {
+            _coroutine = thinker.StartCoroutine(EatCoroutine(thinker,actionRestore,actionTimer ));
         }
 
-        private IEnumerator EatCoroutine(Thinker thinker)
+        private IEnumerator EatCoroutine(Thinker thinker,float actionRestore = -1 ,float actionTimer = -1)
         {
             var character = thinker.GetComponent<Character>();
+            var eatTimerActual = EatTime;
+            var eatRestoreActual = eatRestore;
+            
+            if (actionRestore!= -1) {
+                eatTimerActual = actionTimer;
+                eatRestoreActual = actionRestore;
+            }
+            
             if(character != null)
             {
-                Debug.Log("Start eating");
-                yield return new WaitForSeconds(EatTime);
-                character.Hunger = Mathf.Clamp(character.Hunger + eatRestore, 0, 100);
-                Debug.Log("End eating");
+                yield return new WaitForSeconds(eatTimerActual);
+                character.Hunger = Mathf.Clamp(character.Hunger + eatRestoreActual, 0, 100);
             }
             _coroutine = null;
         }

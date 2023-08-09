@@ -1,3 +1,4 @@
+using CharacterData;
 using UtilityAI;
 
 public class CharacterThirstParameter : Parameter

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using Action = UtilityAI.Action;
 
@@ -9,25 +10,31 @@ namespace Objects {
 
 	
 	[CreateAssetMenu(menuName = "Objects/ObjectRestore", fileName = "_Object", order = 0)]
-	public class ObjectRestoreParameters : ScriptableObject {
-
+	public class ObjectRestoreParameters : SerializedScriptableObject {
+		
+	
 		public List<ActionParamsElement> ActionParamsElements = new List<ActionParamsElement>();
 
 		public bool CanObjectSatisfyNeeded(Action action) {
-			return ActionParamsElements.Any(actions => actions.Action == action);
+			return ActionParamsElements.Any(actionParameter => actionParameter.Action.GetType() == action.GetType());
 		}
 
 
 		public float GetValueBasedOnAction(Action action) {
 			
-			return (from actions in ActionParamsElements where actions.Action == action select actions.GetValueBasedOnParameters(0)).FirstOrDefault();
+			foreach (var actionParameter in ActionParamsElements) {
+				if (actionParameter.Action.GetType() == action.GetType()) {
+					return actionParameter.actionRestore;
+				}
+			}
+			return -1;
 		}
 
 
 		public Tuple<float, float> GetActionValues(Action action) {
-			foreach (var actionParamsElement in ActionParamsElements) {
-				if (actionParamsElement.Action == action) {
-					return new Tuple<float, float>(actionParamsElement.actionTime, actionParamsElement.actionRestore);
+			foreach (var actionParameter in ActionParamsElements) {
+				if (actionParameter.Action.GetType() == action.GetType()) {
+					return new Tuple<float, float>(actionParameter.actionTime, actionParameter.actionRestore);
 				}
 			}
 			return new Tuple<float, float>(0, 0);
@@ -38,9 +45,14 @@ namespace Objects {
 	[Serializable]
 	public class ActionParamsElement {
 		
+		[SerializeReference]
 		public Action Action;
 		public float actionTime;
 		public int actionRestore;
+
+		public ActionParamsElement(Action action) {
+			Action = action;
+		}
 
 		public float GetValueBasedOnParameters(float parameters) {
 			return actionRestore;

@@ -1,6 +1,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 using System;
+using Object = System.Object;
 
 namespace UtilityAI
 {
@@ -13,10 +14,11 @@ namespace UtilityAI
         public Weight[] Weights = Array.Empty<Weight>();
 
         [SerializeField] protected bool WaitForComplete = true;
+        [SerializeField] protected bool mustBeStopped = false;
         
-        public abstract void Execute(Thinker thinker, float deltaTime,bool needObject);
+        public abstract void Execute(Thinker thinker, float deltaTime,bool needObject = false);
 
-        public abstract void ExecuteActionAfterMovement(Thinker thinker, float deltaTime);
+        public abstract void ExecuteActionAfterMovement(Thinker thinker, float deltaTime,float actionTimer = -1,float actionRestore= -1);
      
 
         public virtual bool NeedsToBeWaited()
@@ -54,5 +56,7 @@ namespace UtilityAI
             }
             return totalValue;
         }
+
+        public bool MustActionBeStopped() => mustBeStopped;
     }
 }

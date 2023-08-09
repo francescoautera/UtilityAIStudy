@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using System.Collections;
+using CharacterData;
 using Objects;
 
 namespace UtilityAI
@@ -10,50 +11,43 @@ namespace UtilityAI
         
         public float drinkTime;
         public float drinkRestore;
-        private ObjectLogic currentObject;
+       
         
         private Coroutine _coroutine;
 
-        public override void Execute(Thinker thinker, float deltaTime,bool needObject)
+        public override void Execute(Thinker thinker, float deltaTime,bool needObject = false)
         {
             if (!needObject) {
-                _coroutine = thinker.StartCoroutine(EatCoroutine(thinker));
+                _coroutine = thinker.StartCoroutine(DrinkCoroutine(thinker));
             }
-            else {
-                currentObject = GetObject(thinker, this);
-                thinker.GetComponent<AgentLogic>().Move(currentObject,this);
-            }
-        }
-        
-        private ObjectLogic GetObject(Thinker thinker, Action action) {
-            return ObjectLogicContainer.Instance.GetObject(action, thinker);
+            
         }
         
 
-        public override void ExecuteActionAfterMovement(Thinker thinker, float deltaTime) {
-            _coroutine = thinker.StartCoroutine(EatCoroutine(thinker, currentObject.ObjectRestoreParameters));
+        public override void ExecuteActionAfterMovement(Thinker thinker, float deltaTime, float actionTimer = -1, float actionRestore = -1) {
+            _coroutine = thinker.StartCoroutine(DrinkCoroutine(thinker,actionRestore,actionTimer));
         }
 
 
 
-        private IEnumerator EatCoroutine(Thinker thinker,ObjectRestoreParameters objectRestoreParameters = null)
+        private IEnumerator DrinkCoroutine(Thinker thinker,float actionRestore = -1, float actionTimer = -1)
         {
+            
             var character = thinker.GetComponent<Character>();
-            if (objectRestoreParameters != null) {
-                var values =objectRestoreParameters.GetActionValues(this);
-                drinkTime = values.Item1;
-                drinkRestore = values.Item2;
+            var drinkTimerActual = drinkTime;
+            var drinkRestoreActual = drinkRestore;
+            
+            if (actionRestore!= -1) {
+                drinkTimerActual = actionTimer;
+                drinkRestoreActual = actionRestore;
             }
             
             if(character != null)
             {
-                Debug.Log("Start drinking");
-                yield return new WaitForSeconds(drinkTime);
-                character.Thirst = Mathf.Clamp(character.Thirst + drinkRestore, 0, 100);
-                Debug.Log("End drinking");
+                yield return new WaitForSeconds(drinkTimerActual);
+                character.Thirst = Mathf.Clamp(character.Thirst + drinkRestoreActual, 0, 100);
             }
             _coroutine = null;
-            currentObject = null;
         }
 
         public override bool IsCompleted()
