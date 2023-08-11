@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using CharacterData;
 using Objects;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -14,20 +15,23 @@ public class AgentLogic : MonoBehaviour {
 	public NavMeshAgent Agent;
 	[SerializeField,ReadOnly] Vector3 currentTransform;
 	private Action currentAction;
+	private Character character;
 	public float tresholdStopCharacter;
-	public Collider terrainCollider;
-	private ObjectRestoreParameters _objectLogic;
+	private Collider terrainCollider;
+	[SerializeField] private string moveAnimatorTrigger;
+	private ObjectLogic _objectLogic;
 	private Tuple<float, float> actionValues = new Tuple<float, float>(-1,-1);
 
 	private void Awake() {
 		Agent.isStopped = true;
+		terrainCollider = Plane.Instance.GetComponent<Collider>();
 	}
 
 	public void Move(ObjectLogic objectLogic,Action action) {
-		_objectLogic = objectLogic.ObjectRestoreParameters;
-		currentTransform = objectLogic.transform.position;
+		_objectLogic = objectLogic;
+		currentTransform = objectLogic.GetDestination().position;
 		currentAction = action;
-		actionValues = _objectLogic.GetActionValues(action);
+		actionValues = _objectLogic.ObjectRestoreParameters.GetActionValues(action);
 		Agent.SetDestination(currentTransform);
 		Agent.isStopped = false;
 	}
@@ -43,10 +47,19 @@ public class AgentLogic : MonoBehaviour {
 		Agent.isStopped = false;
 	}
 
+	public void MoveToSpecificPosition(Action action, Vector3 finalPosition) {
+		currentTransform = finalPosition;
+		currentAction = action;
+		Agent.SetDestination(finalPosition);
+		Agent.isStopped = false;
+	}
+
 	private void Update() {
 		if (Agent.isStopped == false) {
+			character.SetAnimatorState(moveAnimatorTrigger);
 			if (Vector3.Distance(transform.position, currentTransform) < tresholdStopCharacter) {
 				Agent.isStopped = true;
+				_objectLogic.FreeOccupiedPost();
 				currentAction.ExecuteActionAfterMovement(GetComponent<Thinker>(), Time.deltaTime, actionValues.Item1, actionValues.Item2);
 				currentTransform = Vector3.zero;
 				currentAction = null;

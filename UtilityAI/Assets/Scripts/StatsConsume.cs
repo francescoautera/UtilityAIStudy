@@ -14,6 +14,8 @@ namespace CharacterData {
         public float HealthGainedPerSecond = 0;
         public float HungerConsumePerSecond = 2;
         public float ThirstConsumePerSecond = 4;
+        public bool randomizeStatsAtStart;
+        [ShowIf("randomizeStatsAtStart")] public Vector2 consumeMinMax = new Vector2(1,5);
 
         [Title("StatsModifier")]
         [SerializeField,ReadOnly] float modifierHungerConsume = 1f;
@@ -24,6 +26,7 @@ namespace CharacterData {
         [SerializeField] private AnimationCurve thirstBasedHealthModifier = default;
 
 
+        
         private Character _character = null;
         private Thinker _thinker = null;
 
@@ -31,6 +34,11 @@ namespace CharacterData {
             _character = GetComponent<Character>();
             _thinker = GetComponent<Thinker>();
             _thinker.OnActionExecuted += ModifyMultiplierStats;
+            
+            if (randomizeStatsAtStart) {
+                HungerConsumePerSecond = GetValueRandomize();
+                ThirstConsumePerSecond = GetValueRandomize();
+            }
 
         }
 
@@ -56,6 +64,9 @@ namespace CharacterData {
             modifierThirstConsume = actionConsume.thirstConsume;
             modifierHungerConsume = actionConsume.hungerConsume;
         }
+
+
+        private float GetValueRandomize() => Random.Range(consumeMinMax.x, consumeMinMax.y);
     }
 
 }

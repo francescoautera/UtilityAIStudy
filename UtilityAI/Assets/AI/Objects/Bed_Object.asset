@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dd27c15a2e7f579439b567e68a534743, type: 3}
-  m_Name: Food_Object
+  m_Name: Bed_Object
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -21,18 +21,7 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  ActionParamsElements:
-  - Action:
-      rid: 5145368262069190658
-    actionTime: 2
-    actionRestore: 60
+  ActionParamsElements: []
   references:
     version: 2
-    RefIds:
-    - rid: 5145368262069190658
-      type: {class: EatAction, ns: UtilityAI, asm: Assembly-CSharp}
-      data:
-        _title: Action
-        WaitForComplete: 1
-        EatTime: 0
-        eatRestore: 0
+    RefIds: []

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using CharacterData;
 using UnityEngine;
 using UtilityAI;
 using Action = UtilityAI.Action;
@@ -24,6 +25,9 @@ namespace Objects {
 			var objectsCopy = new List<ObjectLogic>();
 			
 			foreach (ObjectLogic objectParam in objects) {
+				if(objectParam.IsOccupied())
+					continue;
+				
 				var objectParameter = objectParam.ObjectRestoreParameters;
 				if (objectParameter.CanObjectSatisfyNeeded(action)) {
 					objectsCopy.Add(objectParam);
@@ -31,10 +35,16 @@ namespace Objects {
 			}
 
 			if (objectsCopy.Count == 0) {
+				var character = thinker.GetComponent<Character>();
+				if (character.characterJob is not Job.None) {
+					thinker.GetComponent<AgentLogic>().MoveToSpecificPosition(action,character.InitPosition);
+					return;
+				}
 				thinker.GetComponent<AgentLogic>().MoveOnRandomPoint(action);
 			}
 			else {
 				var objectRestore = GetMaxRestoreObject(objectsCopy, action);
+				objectRestore.IncreaseOccupiedPost();
 				thinker.GetComponent<AgentLogic>().Move(objectRestore,action);
 			}
 		}

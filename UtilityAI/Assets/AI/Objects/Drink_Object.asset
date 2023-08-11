@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d033b6fe713a4d43b9f1d65595cc268, type: 3}
-  m_Name: StatsConsumeDatabase
+  m_Script: {fileID: 11500000, guid: dd27c15a2e7f579439b567e68a534743, type: 3}
+  m_Name: Drink_Object
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -21,7 +21,18 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  ActionStatsConsumes:
-  - {fileID: 11400000, guid: 91264a8187f7888488ef5ddc0c053cdb, type: 2}
-  - {fileID: 11400000, guid: 019084cc9616c024da3dd2e9b472b23c, type: 2}
-  - {fileID: 11400000, guid: e62f08d8de0493c4d9ed2a74134072df, type: 2}
+  ActionParamsElements:
+  - Action:
+      rid: 5145368262069190659
+    actionTime: 2
+    actionRestore: 50
+  references:
+    version: 2
+    RefIds:
+    - rid: 5145368262069190659
+      type: {class: DrinkAction, ns: UtilityAI, asm: Assembly-CSharp}
+      data:
+        _title: Action
+        WaitForComplete: 1
+        drinkTime: 0
+        drinkRestore: 0
