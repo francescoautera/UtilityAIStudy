@@ -17,16 +17,17 @@ public class AgentLogic : MonoBehaviour {
 	private Action currentAction;
 	private Character character;
 	public float tresholdStopCharacter;
-	private Collider terrainCollider;
+	[SerializeField] private float offsetShoot;
 	[SerializeField] private string moveAnimatorTrigger;
-	private ObjectLogic _objectLogic;
+	[SerializeField] ObjectLogic _objectLogic;
 	private Tuple<float, float> actionValues = new Tuple<float, float>(-1,-1);
 
 	private void Awake() {
 		Agent.isStopped = true;
-		terrainCollider = Plane.Instance.GetComponent<Collider>();
-	}
+		character = GetComponent<Character>();
 
+	}
+	
 	public void Move(ObjectLogic objectLogic,Action action) {
 		_objectLogic = objectLogic;
 		currentTransform = objectLogic.GetDestination().position;
@@ -37,14 +38,18 @@ public class AgentLogic : MonoBehaviour {
 	}
 
 	public void MoveOnRandomPoint(Action action) {
-		var bounds = terrainCollider.bounds;
-		var xPos = Random.Range(bounds.min.x, bounds.max.x);
-		var zPos = Random.Range(bounds.min.z, bounds.max.z);
-		var destination = new Vector3(xPos, transform.position.y, zPos);
-		currentTransform = destination;
-		currentAction = action;
-		Agent.SetDestination(destination);
-		Agent.isStopped = false;
+		var randomDirection = Random.insideUnitSphere * offsetShoot;
+		randomDirection += transform.position;
+		NavMeshHit hit;
+		if (NavMesh.SamplePosition(randomDirection, out hit, offsetShoot, 1)) {
+			var result = hit.position;
+			currentTransform = result;
+			currentAction = action;
+			Agent.SetDestination(result);
+			Agent.isStopped = false;
+		}
+		
+		
 	}
 
 	public void MoveToSpecificPosition(Action action, Vector3 finalPosition) {
@@ -56,10 +61,13 @@ public class AgentLogic : MonoBehaviour {
 
 	private void Update() {
 		if (Agent.isStopped == false) {
-			character.SetAnimatorState(moveAnimatorTrigger);
+			character.SetAnimatorState(moveAnimatorTrigger,true);
 			if (Vector3.Distance(transform.position, currentTransform) < tresholdStopCharacter) {
 				Agent.isStopped = true;
-				_objectLogic.FreeOccupiedPost();
+				if (_objectLogic != null) {
+					ExecuteObjectLogic();
+				}
+				character.SetAnimatorState(moveAnimatorTrigger,false);
 				currentAction.ExecuteActionAfterMovement(GetComponent<Thinker>(), Time.deltaTime, actionValues.Item1, actionValues.Item2);
 				currentTransform = Vector3.zero;
 				currentAction = null;
@@ -67,5 +75,13 @@ public class AgentLogic : MonoBehaviour {
 				actionValues = new Tuple<float, float>(-1,-1);
 			}
 		}
+	}
+
+	private void ExecuteObjectLogic() {
+		_objectLogic.FreeOccupiedPost();
+		transform.position = currentTransform;
+		var animTrigger = _objectLogic.ObjectRestoreParameters.animTrigger;
+		character.SetAnimatorState(animTrigger,true);
+		character.ActiveActionInfo(actionValues.Item1);
 	}
 }

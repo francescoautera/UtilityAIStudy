@@ -1,13 +1,16 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 using System;
+using System.Collections;
 using Object = System.Object;
 
 namespace UtilityAI
 {
     [Serializable]
-    public abstract class Action
-    {
+    public abstract class Action {
+        
+        [NonSerialized] public Action<Action> OnEndAction;
+        
         [SerializeField] private string _title = "Action";
 
         [ListDrawerSettings(ListElementLabelName = "_title")]
@@ -15,7 +18,9 @@ namespace UtilityAI
 
         [SerializeField] protected bool WaitForComplete = true;
         [SerializeField] protected bool mustBeStopped = false;
-        
+
+        public string Title => _title;
+
         public abstract void Execute(Thinker thinker, float deltaTime,bool needObject = false);
 
         public abstract void ExecuteActionAfterMovement(Thinker thinker, float deltaTime,float actionTimer = -1,float actionRestore= -1);
@@ -58,5 +63,7 @@ namespace UtilityAI
         }
 
         public bool MustActionBeStopped() => mustBeStopped;
+
+        public abstract IEnumerator GetEnumerator(Thinker thinker);
     }
 }

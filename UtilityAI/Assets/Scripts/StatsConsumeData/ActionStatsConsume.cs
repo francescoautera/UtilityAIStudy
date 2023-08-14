@@ -10,6 +10,8 @@ public class ActionStatsConsume : ScriptableObject {
     [SerializeReference] public Action actionRef;
     public float hungerConsume;
     public float thirstConsume;
+    public float funConsume;
+    public float sleepyConsume;
 
 
     public bool IsTheSameAction(Action action) {

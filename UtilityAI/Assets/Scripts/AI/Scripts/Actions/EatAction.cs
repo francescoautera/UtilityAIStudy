@@ -10,13 +10,18 @@ namespace UtilityAI
         public float EatTime;
         public float eatRestore;
         private Coroutine _coroutine;
+        private bool isInAction;
+        private bool isActionWithObject;
+        
 
         public override void Execute(Thinker thinker, float deltaTime, bool needObject = false) {
            
             if (!needObject) {
                 _coroutine = thinker.StartCoroutine(EatCoroutine(thinker));
+                isInAction = true;
             }
-           
+            isActionWithObject = true;
+
         }
         
         
@@ -40,12 +45,18 @@ namespace UtilityAI
                 yield return new WaitForSeconds(eatTimerActual);
                 character.Hunger = Mathf.Clamp(character.Hunger + eatRestoreActual, 0, 100);
             }
-            _coroutine = null;
+            
+            OnEndAction?.Invoke(this);
         }
 
         public override bool IsCompleted()
         {
-            return _coroutine == null;
+            return !isActionWithObject;
+        }
+
+        public override IEnumerator GetEnumerator(Thinker thinker) {
+            return EatCoroutine(thinker);
         }
     }
+
 }

@@ -20,8 +20,9 @@ namespace UtilityAI
         [NonSerialized] public Action<Action, Thinker> OnObjectSatisfyRequested;
         [NonSerialized] public  Action<Action> OnActionExecuted;
         public static Action<Thinker> OnThinkerBorn;
+        [NonSerialized] public Action<Thinker> OnActionEndedFirst;
 
-        [ReadOnly] private List<Action> _actionsRunning = new();
+        [ReadOnly,SerializeReference] private List<Action> _actionsRunning = new();
         
         private float _lastThinkTime = 0;
 
@@ -64,6 +65,7 @@ namespace UtilityAI
             var deltaTime = Time.time - _lastThinkTime;
             var actionToExecute = BrainData.GetBestAction(this);
             if (!IsActionOnList(actionToExecute)) {
+                actionToExecute.OnEndAction += RemoveAction;
                 RemoveActions();
                 _actionsRunning.Add(actionToExecute);
                 OnActionExecuted?.Invoke(actionToExecute);
@@ -99,11 +101,25 @@ namespace UtilityAI
             for(int i = 0 ; i < _actionsRunning.Count; i++)
             {
                 if (_actionsRunning[i].MustActionBeStopped()) {
+                    OnActionEndedFirst?.Invoke(this);
+                    _actionsRunning[i].OnEndAction -= RemoveAction;
                     _actionsRunning.RemoveAt(i);
                 }
             }
         }
 
+        private void RemoveAction(Action action) {
+            action.OnEndAction -= RemoveAction;
+            Debug.Log(action.Title + " " + gameObject.name);
+            foreach (var actions in _actionsRunning) {
+                if (actions.GetType() == action.GetType()) {
+                    _actionsRunning.Remove(action);
+                    Think();
+                    return;
+                }
+            }
+        }
+        
 
         private bool IsActionOnList(Action action) {
             foreach (var actions in _actionsRunning) {

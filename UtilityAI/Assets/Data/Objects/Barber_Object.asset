@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd27c15a2e7f579439b567e68a534743, type: 3}
+  m_Name: Barber_Object
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  ActionParamsElements:
+  - Action:
+      rid: 5145368397161955334
+    actionTime: 3
+    actionRestore: 50
+  animTrigger: sit
+  references:
+    version: 2
+    RefIds:
+    - rid: 5145368397161955334
+      type: {class: FunAction, ns: UtilityAI, asm: Assembly-CSharp}
+      data:
+        _title: Action
+        WaitForComplete: 1
+        mustBeStopped: 0
+        funTimer: 0
+        funRestore: 0

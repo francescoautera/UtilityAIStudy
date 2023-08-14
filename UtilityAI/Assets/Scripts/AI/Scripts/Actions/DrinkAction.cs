@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using CharacterData;
 using Objects;
 
@@ -11,28 +12,26 @@ namespace UtilityAI
         
         public float drinkTime;
         public float drinkRestore;
-       
-        
-        private Coroutine _coroutine;
+        public bool IsActionWithObject;
+         
 
         public override void Execute(Thinker thinker, float deltaTime,bool needObject = false)
         {
             if (!needObject) {
-                _coroutine = thinker.StartCoroutine(DrinkCoroutine(thinker));
+                thinker.StartCoroutine(DrinkCoroutine(thinker));
             }
-            
+            IsActionWithObject = true;
         }
         
 
         public override void ExecuteActionAfterMovement(Thinker thinker, float deltaTime, float actionTimer = -1, float actionRestore = -1) {
-            _coroutine = thinker.StartCoroutine(DrinkCoroutine(thinker,actionRestore,actionTimer));
+           thinker.StartCoroutine(DrinkCoroutine(thinker,actionRestore,actionTimer));
         }
 
 
 
         private IEnumerator DrinkCoroutine(Thinker thinker,float actionRestore = -1, float actionTimer = -1)
         {
-            
             var character = thinker.GetComponent<Character>();
             var drinkTimerActual = drinkTime;
             var drinkRestoreActual = drinkRestore;
@@ -47,12 +46,19 @@ namespace UtilityAI
                 yield return new WaitForSeconds(drinkTimerActual);
                 character.Thirst = Mathf.Clamp(character.Thirst + drinkRestoreActual, 0, 100);
             }
-            _coroutine = null;
+            OnEndAction?.Invoke(this);
         }
+        
+        
 
         public override bool IsCompleted()
         {
-            return _coroutine == null;
+            return !IsActionWithObject;
         }
+
+        public override IEnumerator GetEnumerator(Thinker thinker) {
+            return DrinkCoroutine(thinker);
+        }
+
     }
 }

@@ -14,6 +14,7 @@ namespace Objects {
 		
 	
 		public List<ActionParamsElement> ActionParamsElements = new List<ActionParamsElement>();
+		public string animTrigger;
 
 		public bool CanObjectSatisfyNeeded(Action action) {
 			return ActionParamsElements.Any(actionParameter => actionParameter.Action.GetType() == action.GetType());

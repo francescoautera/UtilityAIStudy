@@ -1,3 +1,4 @@
+using System.Collections;
 using CharacterData;
 
 namespace UtilityAI
@@ -19,8 +20,16 @@ namespace UtilityAI
             endAction = true;
         }
 
+        IEnumerator IdleCor() {
+            yield return null;
+        }
+
         public override bool IsCompleted() {
             return endAction;
+        }
+
+        public override IEnumerator GetEnumerator(Thinker thinker) {
+            return IdleCor();
         }
     }
 }
