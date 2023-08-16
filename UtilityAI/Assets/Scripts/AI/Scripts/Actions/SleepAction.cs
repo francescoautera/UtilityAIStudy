@@ -37,7 +37,7 @@ namespace UtilityAI {
 				yield return new WaitForSeconds(sleepTimerActual);
 				character.Sleepy = Mathf.Clamp(character.Sleepy + sleepRestoreActual, 0, 100);
 			}
-			OnEndAction?.Invoke(this);
+			OnEndAction?.Invoke(this,thinker);
             
 			if (!needObject) {
 				isInAction = false;

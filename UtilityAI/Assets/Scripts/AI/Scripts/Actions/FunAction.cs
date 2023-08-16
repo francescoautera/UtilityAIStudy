@@ -37,12 +37,9 @@ namespace UtilityAI {
 				yield return new WaitForSeconds(funTimerActual);
 				character.Fun = Mathf.Clamp(character.Sleepy + funRestoreActual, 0, 100);
 			}
-			OnEndAction?.Invoke(this);
-            
-			if (!needObject) {
-				isInAction = false;
-			}
-            
+			
+			OnEndAction?.Invoke(this,thinker);
+			
 		}
 
 		public override bool IsCompleted() {

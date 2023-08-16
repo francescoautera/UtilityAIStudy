@@ -44,7 +44,7 @@ namespace Objects {
 			}
 			else {
 				var objectRestore = GetMaxRestoreObject(objectsCopy, action);
-				objectRestore.IncreaseOccupiedPost();
+				objectRestore.IncreaseOccupiedPost(action,thinker);
 				thinker.GetComponent<AgentLogic>().Move(objectRestore,action);
 			}
 		}

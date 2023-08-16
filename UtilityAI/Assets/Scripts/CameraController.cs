@@ -23,7 +23,11 @@ public class CameraController : MonoBehaviour {
 		characterInfo = FindObjectOfType<CharacterInfo>();
 		characterInfo.OnCloseRequested += ResetMasterCamera;
 		allKeys = Enum.GetValues(typeof(KeyCode)).Cast<KeyCode>();
-		
+		foreach (var cameraButton in cameraButtonMaps) {
+			cameraButton.AudioListener.enabled = false;
+		}
+		masterCamera.GetComponent<AudioListener>().enabled = true;
+
 	}
 
 	private void Update() {
@@ -44,16 +48,34 @@ public class CameraController : MonoBehaviour {
 	}
 
 	private void FindKeyCode(KeyCode keyCode) {
+		
 		foreach (var cameraButton in cameraButtonMaps) {
-			cameraButton.cameraPriority.Priority = 10;
 			if (cameraButton.KeyCode == keyCode) {
+				cameraButton.cameraPriority.Priority = 11;
 				masterCamera = cameraButton.cameraPriority;
-				masterCamera.Priority = 11;
+				cameraButton.AudioListener.enabled = true;
+				StartCoroutine(WaitReset());
+				break;
 			}
 		}
+
+		
 	}
-	
-	
+
+	IEnumerator WaitReset() {
+		yield return null;
+		ResetCameras();
+	}
+
+	private void ResetCameras() {
+		foreach (var cameraButton in cameraButtonMaps) {
+			if(cameraButton.cameraPriority == masterCamera)
+				continue;
+			cameraButton.cameraPriority.Priority = 10;
+			cameraButton.AudioListener.enabled = false;
+		}
+	}
+
 
 	private void TryHitCharacter(Vector3 position) {
 		
@@ -79,5 +101,6 @@ public class CameraController : MonoBehaviour {
 		
 		public KeyCode KeyCode;
 		public CinemachineVirtualCamera cameraPriority;
+		public AudioListener AudioListener;
 	}
 }

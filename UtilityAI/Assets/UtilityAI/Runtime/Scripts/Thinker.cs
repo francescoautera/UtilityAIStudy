@@ -108,9 +108,11 @@ namespace UtilityAI
             }
         }
 
-        private void RemoveAction(Action action) {
+        private void RemoveAction(Action action,Thinker thinker) {
+            if (thinker != this) {
+                return;
+            }
             action.OnEndAction -= RemoveAction;
-            Debug.Log(action.Title + " " + gameObject.name);
             foreach (var actions in _actionsRunning) {
                 if (actions.GetType() == action.GetType()) {
                     _actionsRunning.Remove(action);

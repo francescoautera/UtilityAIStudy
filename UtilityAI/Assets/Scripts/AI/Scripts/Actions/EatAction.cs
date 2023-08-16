@@ -46,7 +46,7 @@ namespace UtilityAI
                 character.Hunger = Mathf.Clamp(character.Hunger + eatRestoreActual, 0, 100);
             }
             
-            OnEndAction?.Invoke(this);
+            OnEndAction?.Invoke(this,thinker);
         }
 
         public override bool IsCompleted()

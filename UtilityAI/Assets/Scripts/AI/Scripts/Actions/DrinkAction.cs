@@ -46,7 +46,7 @@ namespace UtilityAI
                 yield return new WaitForSeconds(drinkTimerActual);
                 character.Thirst = Mathf.Clamp(character.Thirst + drinkRestoreActual, 0, 100);
             }
-            OnEndAction?.Invoke(this);
+            OnEndAction?.Invoke(this,thinker);
         }
         
         

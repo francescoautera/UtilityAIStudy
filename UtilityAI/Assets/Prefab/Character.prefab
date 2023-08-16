@@ -2614,6 +2614,8 @@ MonoBehaviour:
   offsetShoot: 20
   moveAnimatorTrigger: walk
   _objectLogic: {fileID: 0}
+  timerDestination: 3.2
+  currentTimer: 0
 --- !u!195 &5447715563076273264
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2635,7 +2637,7 @@ NavMeshAgent:
   m_Height: 2
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_ObstacleAvoidanceType: 3
 --- !u!114 &2581501128967796971
 MonoBehaviour:
   m_ObjectHideFlags: 0

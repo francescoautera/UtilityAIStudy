@@ -9,7 +9,7 @@ namespace UtilityAI
     [Serializable]
     public abstract class Action {
         
-        [NonSerialized] public Action<Action> OnEndAction;
+        [NonSerialized] public Action<Action,Thinker> OnEndAction;
         
         [SerializeField] private string _title = "Action";
 

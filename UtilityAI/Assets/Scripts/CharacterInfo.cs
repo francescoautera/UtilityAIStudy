@@ -42,6 +42,7 @@ public class CharacterInfo : MonoBehaviour {
          stat.Init(currCharacter);
       }
       healthInfo.Init(currCharacter);
+      UpdateActionName(currCharacter.GetComponent<AgentLogic>().CurrentAction.Title);
    }
 
    private void DeInit() {

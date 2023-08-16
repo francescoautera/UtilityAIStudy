@@ -20,7 +20,11 @@ public class AgentLogic : MonoBehaviour {
 	[SerializeField] private float offsetShoot;
 	[SerializeField] private string moveAnimatorTrigger;
 	[SerializeField] ObjectLogic _objectLogic;
+	[SerializeField] private float timerDestination;
+	[SerializeField,ReadOnly] float currentTimer;
 	private Tuple<float, float> actionValues = new Tuple<float, float>(-1,-1);
+
+	public Action CurrentAction => currentAction;
 
 	private void Awake() {
 		Agent.isStopped = true;
@@ -29,6 +33,7 @@ public class AgentLogic : MonoBehaviour {
 	}
 	
 	public void Move(ObjectLogic objectLogic,Action action) {
+		UpdateAgent(true);
 		_objectLogic = objectLogic;
 		currentTransform = objectLogic.GetDestination().position;
 		currentAction = action;
@@ -37,7 +42,9 @@ public class AgentLogic : MonoBehaviour {
 		Agent.isStopped = false;
 	}
 
+	[Button]
 	public void MoveOnRandomPoint(Action action) {
+		UpdateAgent(true);
 		var randomDirection = Random.insideUnitSphere * offsetShoot;
 		randomDirection += transform.position;
 		NavMeshHit hit;
@@ -53,6 +60,9 @@ public class AgentLogic : MonoBehaviour {
 	}
 
 	public void MoveToSpecificPosition(Action action, Vector3 finalPosition) {
+		if (Vector3.Distance(transform.position, finalPosition) > tresholdStopCharacter) {
+			UpdateAgent(true);
+		}
 		currentTransform = finalPosition;
 		currentAction = action;
 		Agent.SetDestination(finalPosition);
@@ -60,28 +70,56 @@ public class AgentLogic : MonoBehaviour {
 	}
 
 	private void Update() {
-		if (Agent.isStopped == false) {
-			character.SetAnimatorState(moveAnimatorTrigger,true);
-			if (Vector3.Distance(transform.position, currentTransform) < tresholdStopCharacter) {
-				Agent.isStopped = true;
-				if (_objectLogic != null) {
-					ExecuteObjectLogic();
+		if(!Agent.enabled)
+			return;
+		
+		switch (Agent.isStopped) {
+			case false when currentAction == null && character.characterJob is Job.None :
+				TryCheckBlocked();
+				return;
+			case false when (character.characterJob is Job.None && currentAction is IdleAction): 
+				character.SetAnimatorState(moveAnimatorTrigger,true);
+				TryCheckBlocked();
+				return;
+			case false : {
+				character.SetAnimatorState(moveAnimatorTrigger,true);
+				if (Vector3.Distance(transform.position, currentTransform) <= tresholdStopCharacter) {
+					Agent.isStopped = true;
+					if (_objectLogic != null) {
+						ExecuteObjectLogic();
+					}
+					character.SetAnimatorState(moveAnimatorTrigger,false);
+					UpdateAgent(false);
+					currentAction.ExecuteActionAfterMovement(GetComponent<Thinker>(), Time.deltaTime, actionValues.Item1, actionValues.Item2);
+					currentTransform = Vector3.zero;
+					currentAction = null;
+					_objectLogic = null;
+					actionValues = new Tuple<float, float>(-1,-1);
 				}
-				character.SetAnimatorState(moveAnimatorTrigger,false);
-				currentAction.ExecuteActionAfterMovement(GetComponent<Thinker>(), Time.deltaTime, actionValues.Item1, actionValues.Item2);
-				currentTransform = Vector3.zero;
-				currentAction = null;
-				_objectLogic = null;
-				actionValues = new Tuple<float, float>(-1,-1);
+				break;
 			}
 		}
 	}
 
 	private void ExecuteObjectLogic() {
-		_objectLogic.FreeOccupiedPost();
 		transform.position = currentTransform;
 		var animTrigger = _objectLogic.ObjectRestoreParameters.animTrigger;
 		character.SetAnimatorState(animTrigger,true);
 		character.ActiveActionInfo(actionValues.Item1);
 	}
+
+	public void UpdateAgent(bool active) {
+		Agent.enabled = active;
+	}
+
+	private void TryCheckBlocked() {
+		if (currentAction is IdleAction && character.characterJob is Job.None) {
+			currentTimer += Time.deltaTime;
+			if (currentTimer >= timerDestination) {
+				currentTimer = 0;
+				MoveOnRandomPoint(currentAction);
+			}
+		}
+	}
+
 }
