@@ -2562,6 +2562,8 @@ MonoBehaviour:
   characterJob: 0
   characterAnimator: {fileID: 95918252503098470}
   cameraCharacter: {fileID: 8992468593395560976}
+  positionBuildingCamera: {x: 0, y: 3.2, z: -4}
+  initPositionCamera: {x: 0, y: 0, z: 0}
   MaxValueStat: 100
   Health: 100
   Hunger: 100
@@ -2614,7 +2616,7 @@ MonoBehaviour:
   offsetShoot: 20
   moveAnimatorTrigger: walk
   _objectLogic: {fileID: 0}
-  timerDestination: 3.2
+  timerDestination: 0.5
   currentTimer: 0
 --- !u!195 &5447715563076273264
 NavMeshAgent:
@@ -3056,8 +3058,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5673286897496840682}
   - component: {fileID: 6337203273324367340}
-  - component: {fileID: 1922778778068516743}
-  - component: {fileID: 176555359}
   m_Layer: 3
   m_Name: cm
   m_TagString: Untagged
@@ -3092,42 +3092,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1922778778068516743
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4211674971329919199}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd6043bde05a7fc4cba197d06915c1e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Damping: {x: 0, y: 0, z: 0}
-  ShoulderOffset: {x: 0.2, y: 5.21, z: 0}
-  VerticalArmLength: 3
-  CameraSide: 0.5
-  CameraDistance: -8
-  CameraCollisionFilter:
-    serializedVersion: 2
-    m_Bits: 128
-  IgnoreTag: 
-  CameraRadius: 0.001
-  DampingIntoCollision: 0
-  DampingFromCollision: 0.5
---- !u!114 &176555359
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4211674971329919199}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e8b78ac948f05a46a6d8339a503172b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4420799083445875170
 GameObject:
   m_ObjectHideFlags: 0
@@ -3138,6 +3102,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4171467654857182526}
   - component: {fileID: 8992468593395560976}
+  - component: {fileID: 5201473469563844752}
   m_Layer: 3
   m_Name: CM vcam1
   m_TagString: Untagged
@@ -3152,15 +3117,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4420799083445875170}
-  m_LocalRotation: {x: -0, y: 0.9213815, z: -0.38865948, w: 0}
-  m_LocalPosition: {x: 0, y: 8.21, z: 8}
+  m_LocalRotation: {x: 0.2707681, y: 0.024022771, z: -0.006759282, w: 0.9623211}
+  m_LocalPosition: {x: 0, y: 7, z: -8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5673286897496840682}
   m_Father: {fileID: 4517892917420314}
   m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: 0, y: 1.03, z: 0}
+  m_LocalEulerAnglesHint: {x: 31.43, y: 2.86, z: 0}
 --- !u!114 &8992468593395560976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3182,7 +3147,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 4517892917420314}
   m_Follow: {fileID: 4517892917420314}
   m_Lens:
-    FieldOfView: 38
+    FieldOfView: 37.5
     OrthographicSize: 6
     NearClipPlane: 0.3
     FarClipPlane: 1000
@@ -3199,6 +3164,14 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 5673286897496840682}
+--- !u!81 &5201473469563844752
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4420799083445875170}
+  m_Enabled: 1
 --- !u!1 &6472364677621745546
 GameObject:
   m_ObjectHideFlags: 0

@@ -22,7 +22,10 @@ public class AgentLogic : MonoBehaviour {
 	[SerializeField] ObjectLogic _objectLogic;
 	[SerializeField] private float timerDestination;
 	[SerializeField,ReadOnly] float currentTimer;
+	private float lastTimerUpdatePosition = 0.4f;
+	private float updateTimePosition;
 	private Tuple<float, float> actionValues = new Tuple<float, float>(-1,-1);
+	private Vector3 lastPosition;
 
 	public Action CurrentAction => currentAction;
 
@@ -47,14 +50,21 @@ public class AgentLogic : MonoBehaviour {
 		UpdateAgent(true);
 		var randomDirection = Random.insideUnitSphere * offsetShoot;
 		randomDirection += transform.position;
+		randomDirection.y = transform.position.y;
 		NavMeshHit hit;
 		if (NavMesh.SamplePosition(randomDirection, out hit, offsetShoot, 1)) {
 			var result = hit.position;
 			currentTransform = result;
 			currentAction = action;
 			Agent.SetDestination(result);
-			Agent.isStopped = false;
 		}
+		Agent.isStopped = false;
+		NavMeshPath navMeshPath = new NavMeshPath();
+		if (!Agent.CalculatePath(currentTransform,navMeshPath)) {
+			Debug.Log("enter");
+			MoveOnRandomPoint(currentAction);
+		}
+		
 		
 		
 	}
@@ -72,16 +82,8 @@ public class AgentLogic : MonoBehaviour {
 	private void Update() {
 		if(!Agent.enabled)
 			return;
-		
-		switch (Agent.isStopped) {
-			case false when currentAction == null && character.characterJob is Job.None :
-				TryCheckBlocked();
-				return;
-			case false when (character.characterJob is Job.None && currentAction is IdleAction): 
-				character.SetAnimatorState(moveAnimatorTrigger,true);
-				TryCheckBlocked();
-				return;
-			case false : {
+
+		if(!Agent.isStopped) {
 				character.SetAnimatorState(moveAnimatorTrigger,true);
 				if (Vector3.Distance(transform.position, currentTransform) <= tresholdStopCharacter) {
 					Agent.isStopped = true;
@@ -96,9 +98,15 @@ public class AgentLogic : MonoBehaviour {
 					_objectLogic = null;
 					actionValues = new Tuple<float, float>(-1,-1);
 				}
-				break;
-			}
+				else {
+					if (currentAction is IdleAction && character.characterJob is Job.None) {
+						TryCheckBlocked();
+					}
+				}
+
 		}
+
+
 	}
 
 	private void ExecuteObjectLogic() {
@@ -113,13 +121,28 @@ public class AgentLogic : MonoBehaviour {
 	}
 
 	private void TryCheckBlocked() {
-		if (currentAction is IdleAction && character.characterJob is Job.None) {
-			currentTimer += Time.deltaTime;
-			if (currentTimer >= timerDestination) {
-				currentTimer = 0;
-				MoveOnRandomPoint(currentAction);
+		updateTimePosition += Time.deltaTime;
+		if (updateTimePosition >= lastTimerUpdatePosition) {
+			updateTimePosition = 0;
+			if (Vector3.Distance(lastPosition, transform.position) < 0.1f) {
+				currentTimer += Time.deltaTime;
+				if (currentTimer >= timerDestination) {
+					currentTimer = 0;
+					MoveOnRandomPoint(currentAction);
+				}
+			}
+			else {
+				lastPosition = transform.position;
 			}
 		}
+		
+		// if (currentAction is IdleAction && character.characterJob is Job.None) {
+		// 	currentTimer += Time.deltaTime;
+		// 	if (currentTimer >= timerDestination) {
+		// 		currentTimer = 0;
+		// 		MoveOnRandomPoint(currentAction);
+		// 	}
+		// }
 	}
 
 }

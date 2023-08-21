@@ -86,6 +86,7 @@ public class CameraController : MonoBehaviour {
 			currentCharacter = character;
 			characterInfo.Init(character);
 			masterCamera.Priority = 10;
+			masterCamera.GetComponent<AudioListener>().enabled = false;
 		}
 	}
 
@@ -93,6 +94,7 @@ public class CameraController : MonoBehaviour {
 		currentCharacter.ResetCamera();
 		currentCharacter = null;
 		masterCamera.Priority = 11;
+		masterCamera.GetComponent<AudioListener>().enabled = true;
 	}
 	
 	
