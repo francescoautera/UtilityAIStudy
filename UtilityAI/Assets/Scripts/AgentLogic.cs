@@ -22,7 +22,7 @@ public class AgentLogic : MonoBehaviour {
 	[SerializeField] ObjectLogic _objectLogic;
 	[SerializeField] private float timerDestination;
 	[SerializeField,ReadOnly] float currentTimer;
-	private float lastTimerUpdatePosition = 0.4f;
+	[SerializeField] float lastTimerUpdatePosition = 0.2f;
 	private float updateTimePosition;
 	private Tuple<float, float> actionValues = new Tuple<float, float>(-1,-1);
 	private Vector3 lastPosition;
@@ -45,6 +45,9 @@ public class AgentLogic : MonoBehaviour {
 		Agent.isStopped = false;
 	}
 
+	
+	
+	
 	[Button]
 	public void MoveOnRandomPoint(Action action) {
 		UpdateAgent(true);
@@ -100,10 +103,11 @@ public class AgentLogic : MonoBehaviour {
 				}
 				else {
 					if (currentAction is IdleAction && character.characterJob is Job.None) {
+						
 						TryCheckBlocked();
 					}
 				}
-
+				
 		}
 
 
@@ -125,6 +129,7 @@ public class AgentLogic : MonoBehaviour {
 		if (updateTimePosition >= lastTimerUpdatePosition) {
 			updateTimePosition = 0;
 			if (Vector3.Distance(lastPosition, transform.position) < 0.1f) {
+				Debug.Log("Change");
 				currentTimer += Time.deltaTime;
 				if (currentTimer >= timerDestination) {
 					currentTimer = 0;
@@ -132,6 +137,7 @@ public class AgentLogic : MonoBehaviour {
 				}
 			}
 			else {
+				Debug.Log("Update");
 				lastPosition = transform.position;
 			}
 		}

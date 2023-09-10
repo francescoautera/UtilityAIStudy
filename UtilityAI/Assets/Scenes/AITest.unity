@@ -3974,7 +3974,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 118979312}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 14.04, y: 0, z: -15}
+  m_LocalPosition: {x: 14.04, y: 0.253, z: -15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7128,10 +7128,6 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -0.00464326
       objectReference: {fileID: 0}
-    - target: {fileID: 116524632486143559, guid: 40494ddad33230945b25470273a4ed31, type: 3}
-      propertyPath: timerDestination
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 9218320061360208970, guid: 40494ddad33230945b25470273a4ed31, type: 3}
       propertyPath: BrainData
       value: 
@@ -7139,7 +7135,7 @@ PrefabInstance:
     - target: {fileID: 9218320061360208970, guid: 40494ddad33230945b25470273a4ed31, type: 3}
       propertyPath: serializationData.Prefab
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 9218320061360208970, guid: 40494ddad33230945b25470273a4ed31, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40494ddad33230945b25470273a4ed31, type: 3}
 --- !u!4 &156337458 stripped
@@ -7863,22 +7859,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 116524632486143559, guid: 40494ddad33230945b25470273a4ed31, type: 3}
-      propertyPath: timerDestination
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5201473469563844752, guid: 40494ddad33230945b25470273a4ed31, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9218320061360208970, guid: 40494ddad33230945b25470273a4ed31, type: 3}
-      propertyPath: BrainData
-      value: 
-      objectReference: {fileID: 11400000, guid: a41a0574a55a1ed4fadf3e1fa0844af0, type: 2}
     - target: {fileID: 9218320061360208970, guid: 40494ddad33230945b25470273a4ed31, type: 3}
       propertyPath: serializationData.Prefab
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 9218320061360208970, guid: 40494ddad33230945b25470273a4ed31, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40494ddad33230945b25470273a4ed31, type: 3}
 --- !u!1001 &179083609
@@ -11113,10 +11097,6 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 22100000, guid: eee645f5b0ccc27438173c57a7454e56, type: 2}
-    - target: {fileID: 116524632486143559, guid: 40494ddad33230945b25470273a4ed31, type: 3}
-      propertyPath: timerDestination
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 2581501128967796971, guid: 40494ddad33230945b25470273a4ed31, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -11140,7 +11120,7 @@ PrefabInstance:
     - target: {fileID: 9218320061360208970, guid: 40494ddad33230945b25470273a4ed31, type: 3}
       propertyPath: serializationData.Prefab
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 9218320061360208970, guid: 40494ddad33230945b25470273a4ed31, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40494ddad33230945b25470273a4ed31, type: 3}
 --- !u!1001 &291289612
@@ -11206,10 +11186,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 116524632486143559, guid: 40494ddad33230945b25470273a4ed31, type: 3}
-      propertyPath: timerDestination
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 9218320061360208970, guid: 40494ddad33230945b25470273a4ed31, type: 3}
       propertyPath: BrainData
       value: 
@@ -11217,7 +11193,7 @@ PrefabInstance:
     - target: {fileID: 9218320061360208970, guid: 40494ddad33230945b25470273a4ed31, type: 3}
       propertyPath: serializationData.Prefab
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 9218320061360208970, guid: 40494ddad33230945b25470273a4ed31, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40494ddad33230945b25470273a4ed31, type: 3}
 --- !u!4 &291289613 stripped
@@ -32822,10 +32798,6 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -0.00464326
       objectReference: {fileID: 0}
-    - target: {fileID: 116524632486143559, guid: 40494ddad33230945b25470273a4ed31, type: 3}
-      propertyPath: timerDestination
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 9218320061360208970, guid: 40494ddad33230945b25470273a4ed31, type: 3}
       propertyPath: BrainData
       value: 
@@ -32833,7 +32805,7 @@ PrefabInstance:
     - target: {fileID: 9218320061360208970, guid: 40494ddad33230945b25470273a4ed31, type: 3}
       propertyPath: serializationData.Prefab
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 9218320061360208970, guid: 40494ddad33230945b25470273a4ed31, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40494ddad33230945b25470273a4ed31, type: 3}
 --- !u!4 &898572585 stripped
@@ -37900,10 +37872,6 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 22100000, guid: 98237f65c9a772c439a1178cffed95f6, type: 2}
-    - target: {fileID: 116524632486143559, guid: 40494ddad33230945b25470273a4ed31, type: 3}
-      propertyPath: timerDestination
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 2581501128967796971, guid: 40494ddad33230945b25470273a4ed31, type: 3}
       propertyPath: randomizeStatsAtStart
       value: 1
@@ -37919,7 +37887,7 @@ PrefabInstance:
     - target: {fileID: 9218320061360208970, guid: 40494ddad33230945b25470273a4ed31, type: 3}
       propertyPath: serializationData.Prefab
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 9218320061360208970, guid: 40494ddad33230945b25470273a4ed31, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40494ddad33230945b25470273a4ed31, type: 3}
 --- !u!1001 &1042394902
@@ -51777,10 +51745,6 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -0.00464326
       objectReference: {fileID: 0}
-    - target: {fileID: 116524632486143559, guid: 40494ddad33230945b25470273a4ed31, type: 3}
-      propertyPath: timerDestination
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 9218320061360208970, guid: 40494ddad33230945b25470273a4ed31, type: 3}
       propertyPath: BrainData
       value: 
@@ -51788,7 +51752,7 @@ PrefabInstance:
     - target: {fileID: 9218320061360208970, guid: 40494ddad33230945b25470273a4ed31, type: 3}
       propertyPath: serializationData.Prefab
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 9218320061360208970, guid: 40494ddad33230945b25470273a4ed31, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40494ddad33230945b25470273a4ed31, type: 3}
 --- !u!4 &1407531702 stripped
@@ -52094,10 +52058,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 116524632486143559, guid: 40494ddad33230945b25470273a4ed31, type: 3}
-      propertyPath: timerDestination
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 9218320061360208970, guid: 40494ddad33230945b25470273a4ed31, type: 3}
       propertyPath: BrainData
       value: 
@@ -52105,7 +52065,7 @@ PrefabInstance:
     - target: {fileID: 9218320061360208970, guid: 40494ddad33230945b25470273a4ed31, type: 3}
       propertyPath: serializationData.Prefab
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 9218320061360208970, guid: 40494ddad33230945b25470273a4ed31, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40494ddad33230945b25470273a4ed31, type: 3}
 --- !u!4 &1416510445 stripped
@@ -52680,7 +52640,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1425711779}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 16, y: 0, z: -15}
+  m_LocalPosition: {x: 16, y: 0.253, z: -15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -61611,7 +61571,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1638055090}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.59, y: 0, z: 0}
+  m_LocalPosition: {x: 0.05, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -75224,7 +75184,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2015296833}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.8, y: 0, z: -15}
+  m_LocalPosition: {x: 9.8, y: 0.253, z: -15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -75799,10 +75759,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 116524632486143559, guid: 40494ddad33230945b25470273a4ed31, type: 3}
-      propertyPath: timerDestination
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 9218320061360208970, guid: 40494ddad33230945b25470273a4ed31, type: 3}
       propertyPath: BrainData
       value: 
@@ -75810,7 +75766,7 @@ PrefabInstance:
     - target: {fileID: 9218320061360208970, guid: 40494ddad33230945b25470273a4ed31, type: 3}
       propertyPath: serializationData.Prefab
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 9218320061360208970, guid: 40494ddad33230945b25470273a4ed31, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40494ddad33230945b25470273a4ed31, type: 3}
 --- !u!1001 &2035176873
@@ -77146,10 +77102,6 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 22100000, guid: fc23eecc450b99a4e938a098c47cf8d8, type: 2}
-    - target: {fileID: 116524632486143559, guid: 40494ddad33230945b25470273a4ed31, type: 3}
-      propertyPath: timerDestination
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 2581501128967796971, guid: 40494ddad33230945b25470273a4ed31, type: 3}
       propertyPath: randomizeStatsAtStart
       value: 1
@@ -77165,7 +77117,7 @@ PrefabInstance:
     - target: {fileID: 9218320061360208970, guid: 40494ddad33230945b25470273a4ed31, type: 3}
       propertyPath: serializationData.Prefab
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 9218320061360208970, guid: 40494ddad33230945b25470273a4ed31, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40494ddad33230945b25470273a4ed31, type: 3}
 --- !u!1001 &2058214355

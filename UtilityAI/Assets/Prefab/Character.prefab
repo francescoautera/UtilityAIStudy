@@ -2616,8 +2616,9 @@ MonoBehaviour:
   offsetShoot: 20
   moveAnimatorTrigger: walk
   _objectLogic: {fileID: 0}
-  timerDestination: 0.5
+  timerDestination: 0.3
   currentTimer: 0
+  lastTimerUpdatePosition: 0.2
 --- !u!195 &5447715563076273264
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -3171,7 +3172,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4420799083445875170}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!1 &6472364677621745546
 GameObject:
   m_ObjectHideFlags: 0
